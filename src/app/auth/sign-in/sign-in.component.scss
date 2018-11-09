@@ -1,0 +1,123 @@
+@import "../../../styles/variables";
+
+.wrapper {
+  margin-top: 100px;
+  margin-bottom: 30px;
+}
+
+.logo {
+  display: block;
+  margin-bottom: 30px;
+}
+.btn {
+
+  &-width {
+    width: 100%;
+    color: #fff;
+    font-family: AvenirMedium;
+  }
+
+  &-facebook {
+    background: $blue-button;
+  }
+
+  &-google {
+    background: $red-button;
+    margin-top: 15px;
+  }
+
+  &-submit {
+    display: block;
+    margin: 25px 0;
+  }
+
+  &-submit.valid {
+    background-color: $orange !important;
+  }
+}
+
+.or {
+  text-align: center;
+  padding: 20px 0;
+
+  &-text {
+    display: inline-block;
+    color: $gray-text;
+    position: relative;
+    font-family: AvenirMedium;
+    font-size: 12px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: -26px;
+      width: 20px;
+      height: 1px;
+      border-bottom: 1px solid $gray-text;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: -26px;
+      width: 20px;
+      height: 1px;
+      border-bottom: 1px solid $gray-text;
+    }
+  }
+}
+
+mat-form-field {
+  display: block;
+  font-family: AvenirRoman;
+  color: $gray-text !important;
+  font-size: 14px;
+}
+
+mat-error {
+  font-family: AvenirRoman;
+}
+
+.form-forgot {
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+.forgot-password {
+  border: none;
+  color: $orange;
+  font-size: 12px;
+  background-color: transparent;
+  cursor: pointer;
+  font-family: AvenirMedium;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.no-account {
+  color: $gray-text;
+  font-family: AvenirRoman;
+  font-size: 12px;
+  text-align: center;
+}
+
+.link {
+  text-decoration: none;
+  color: $orange;
+}
+
+.server-error {
+  color: $red-error;
+  text-align: center;
+  padding: 0 25px 30px;
+  font-size: 14px;
+  font-family: AvenirRoman;
+  line-height: 18px;
+}

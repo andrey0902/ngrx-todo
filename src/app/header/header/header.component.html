@@ -1,0 +1,23 @@
+<div class="header-wrapper">
+  <header class="header">
+    <div class="header-first">
+      <div class="logo-wrapper">
+        <a routerLink="/board">
+          <img class="logo-img" src="./assets/TODO_Logo.png" alt="logo">
+        </a>
+      </div>
+      <div class="nav-wrapper">
+        <div class="action">
+          <button mat-raised-button (click)="openModal()">Add ToDo</button>
+        </div>
+        <div class="menu-block">
+          <button mat-button [matMenuTriggerFor]="appMenu">Menu</button>
+          <mat-menu #appMenu="matMenu">
+            <button mat-menu-item>Settings</button>
+            <button mat-menu-item (click)="logOut()">Log Out</button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>

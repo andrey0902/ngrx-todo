@@ -1,0 +1,34 @@
+<!--<div class="category-wrapper" *ngIf="data$ | async as data">-->
+
+  <!--<app-add-category></app-add-category>-->
+  <!--<app-task *ngFor="let kyeCat of data.categoryKeys; let lastCategory=last"-->
+            <!--[kyeCat]="kyeCat"-->
+            <!--[tasks]="data.tasks"-->
+            <!--[lastCategory]="lastCategory">-->
+
+  <!--</app-task>-->
+<!--</div>-->
+<div class="category-wrapper"
+     *ngIf="categories"
+>
+
+  <app-add-category (addNewCategory)="addNewCategory($event)"
+  ></app-add-category>
+  <app-task *ngFor="let category of categories; let lastCategory=last; let first=first;"
+            [lastCategory]="lastCategory"
+            [first]="first"
+            [category]="category"
+            [user]="user"
+            (moveToNextCat)="onMoveToNextCat($event)"
+            (moveToPrevCat)="onMoveToPrevCat($event)"
+            (getTasksSingleCategory)="onGetTasksSingleCategory($event)"
+            (deleteTask)="onDeleteTask($event)"
+            (updateTask)="onUpdateTask($event)"
+            (fullUpdateTask)="openEditModal($event)"
+            (deleteCat)="openDeleteModal($event)"
+            (dragTask)="onDragTask($event)"
+
+  >
+
+  </app-task>
+</div>

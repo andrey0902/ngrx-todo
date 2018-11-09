@@ -1,0 +1,42 @@
+.header {
+
+  &-wrapper {
+    background-color: #3f51b5;
+    color: #ffffff;
+  }
+
+  &-first {
+    display: flex;
+    height: 60px;
+    align-items: center;
+    padding: 5px 15px;
+  }
+
+}
+
+.logo {
+
+  &-wrapper {
+    margin-right: 20px;
+    flex-grow: 1;
+  }
+
+  &-img {
+    max-height: 30px;
+    max-width: 100%;
+  }
+}
+
+.category-text {
+  color: #ffffff;
+}
+
+.action {
+  color: #ffffff;
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}

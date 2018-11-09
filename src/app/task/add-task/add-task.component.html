@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>
+ <span>
+   {{ isEditMode ? 'Edit TODO' : 'Create TODO'}}
+ </span>
+</h2>
+<mat-dialog-content>
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" id="task">
+    <div class="todo-cat">
+      <mat-form-field>
+        <mat-select [formControlName]="'category'" placeholder="Choose the category">
+          <mat-option *ngFor="let category of categories" [value]="category.id">
+            {{category.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="todo-title">
+      <mat-form-field>
+        <input matInput placeholder="Title of the ToDo" [formControlName]="'title'">
+      </mat-form-field>
+    </div>
+    <div class="todo-action">
+      <button mat-stroked-button color="primary" (click)="addNewTask()">
+        <i class="material-icons">
+          add_circle_outline
+        </i>
+      </button>
+    </div>
+    <div class="todo-task-wrapper">
+      <div class="todo-task" *ngFor="let subTasks of getTasks().controls; let i=index;" [formGroup]="subTasks">
+        <div class="todo-wrapper-input">
+          <mat-form-field>
+            <input matInput placeholder="Task" [formControl]="subTasks.controls['name']">
+          </mat-form-field>
+          <button type="button" class="todo-action-delete" (click)="deleteControl(i)"><i class="material-icons">
+            clear
+          </i></button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <ng-container *ngTemplateOutlet="isEditMode ? editActions : createActions">
+  </ng-container>
+</mat-dialog-actions>
+
+<ng-template #createActions>
+  <div class="create-action">
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-button  form="task">Save TODO</button>
+  </div>
+</ng-template>
+
+<ng-template #editActions>
+  <div class="edit-action">
+    <button mat-button (click)="closeEditMode()">Close</button>
+    <button mat-button  form="task">Update TODO</button>
+  </div>
+</ng-template>
+

@@ -1,0 +1,39 @@
+.todo-wrapper-input {
+  position: relative;
+  padding-right: 15px;
+
+  &:hover .todo-action-delete {
+    opacity: .8;
+  }
+}
+
+.todo-action-delete {
+  opacity: 0;
+  transition: .3s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-67%);
+  height: 24px;
+  width: 24px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:hover, &:focus {
+    outline: none;
+  }
+
+}
+
+.todo-action {
+  margin-bottom: 20px;
+}
+
+.todo-task-wrapper {
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+mat-form-field {
+  width: 90%;
+}

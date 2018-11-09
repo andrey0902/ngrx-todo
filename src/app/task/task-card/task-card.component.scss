@@ -1,0 +1,50 @@
+.todo-card {
+  margin-bottom: 10px;
+}
+
+.edit-task {
+  background-color: transparent;
+  border: none;
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+  transition: .3s ease;
+  cursor: pointer;
+  //position: absolute;
+  //top: 50%;
+  //transform: translateY(-50%);
+  //cursor: pointer;
+
+
+  span {
+    padding-right: 10px;
+  }
+
+  i {
+    font-size: 14px;
+  }
+}
+
+.task-name {
+  padding-right: 10px;
+}
+
+.task-text {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover .edit-task {
+    opacity: .9;
+  }
+}
+
+.action {
+  display: flex;
+  justify-content: space-between;
+}
+
+p {
+  margin-bottom: 0;
+}

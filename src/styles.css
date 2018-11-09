@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~normalize.css/normalize.css';
+@import '~bootstrap/dist/css/bootstrap.css';
+@import '~ng-drag-drop/style.css';
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+button:focus, input:focus, textarea:focus {
+  outline: none;
+}

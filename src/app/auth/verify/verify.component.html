@@ -1,0 +1,13 @@
+<ng-container [ngSwitch]="mode">
+  <app-verify-email *ngSwitchCase="modeStatus.VERIFY_EMAIL"
+  [code]="code"
+  ></app-verify-email>
+  <app-verify-restore-password *ngSwitchCase="modeStatus.VERIFY_REST_PASSWORD"
+                               [code]="code"
+  ></app-verify-restore-password>
+
+  <div *ngSwitchDefault>
+    Bed CODE...
+    <a routerLink="/">GO HOME</a>
+  </div>
+</ng-container>

@@ -1,0 +1,62 @@
+<!--<div class="category-col" >
+  <ng-container *ngIf="tasks">
+    <app-task-card *ngFor="let task of tasks[kyeCat]"
+                   [task]="task"
+                   [lastCategory]="lastCategory"></app-task-card>
+  </ng-container>
+
+</div>-->
+<!--<div class="category-col" >-->
+  <!--<ng-container *ngIf="dataTasks$ | async as data">-->
+    <!--<ng-container *ngIf="data.length">-->
+      <!--<app-task-card *ngFor="let task of data"-->
+                     <!--[task]="task"-->
+                     <!--[dataTask]="task"-->
+                     <!--[lastCategory]="lastCategory"-->
+                     <!--[first]="first"-->
+                     <!--(moveToNextCat)="onMoveToNextCat($event)"-->
+                     <!--(moveToPrevCat)="onMoveToPrevCat($event)"-->
+      <!--&gt;</app-task-card>-->
+    <!--</ng-container>-->
+
+  <!--</ng-container>-->
+<!--</div>-->
+<div class="category-col"
+     droppable
+     (onDrop)="onItemDrop($event)"
+     (onDragOver)="dragOver($event)"
+
+
+>
+  <div class="title-wrapper">
+    <span class="title-text">{{category.name}}</span>
+    <button class="delete-task" (click)="deleteCategory()">
+      <i class="material-icons">
+        delete_forever
+      </i>
+    </button>
+  </div>
+  <div class="category-wrapper">
+    <ng-container *ngIf="loadTasks$ | async as tasks; else loader">
+      <ng-container *ngIf="tasks.length">
+        <app-task-card *ngFor="let task of tasks"
+                       [task]="task"
+                       [dataTask]="task"
+                       [lastCategory]="lastCategory"
+                       [first]="first"
+                       (moveToNextCat)="onMoveToNextCat($event)"
+                       (moveToPrevCat)="onMoveToPrevCat($event)"
+                       (deleteTask)="onDeleteTask($event)"
+                       (updateTask)="onUpdateTask($event)"
+                       (fullUpdateTask)="onFullUpdateTask($event)"
+        ></app-task-card>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #loader>
+  <div class="loader">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

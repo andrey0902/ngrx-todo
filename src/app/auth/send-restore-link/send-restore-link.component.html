@@ -1,0 +1,58 @@
+<h2 mat-dialog-title class="title">Retrieve your password
+  <button class="closed" [mat-dialog-close]="true"><i class="material-icons">close</i></button>
+</h2>
+<mat-dialog-content>
+
+  <ng-container *ngTemplateOutlet="!(sendSuccess$ | async) ? sendLinkForm : sendSuccess">
+
+  </ng-container>
+
+  <ng-template #sendLinkForm>
+    <form class="sign-up"
+          id="resend"
+          [formGroup]="retrieveForm"
+          (ngSubmit)="onSubmit(retrieveForm)"
+
+    >
+      <div class="server-error"
+           *ngIf="serverError$ | async as serverError"
+      >
+      <span>
+        {{serverError}}
+      </span>
+        <!--<odds-error class="server-error" [form]="retrieveForm" [errors]="serverError" [errorName]="'none_field'"></odds-error>-->
+      </div>
+
+      <div class="form-email">
+        <mat-form-field>
+          <input matInput placeholder="Email address" formControlName="email" type="email">
+          <!--<mat-error *ngIf="retrieveForm.get('email').invalid">{{getErrorMessage(retrieveForm.get('email'))}}</mat-error>-->
+        </mat-form-field>
+      </div>
+
+    </form>
+  </ng-template>
+
+  <ng-template #sendSuccess>
+    <div class="success">
+      <p class="success-text">
+        Success! Check your email!
+      </p>
+      <p class="success-btn">
+        <a class="success-link" (click)="closed()" [routerLink]="['/sign-in/']">
+          Return to login
+        </a>
+      </p>
+    </div>
+  </ng-template>
+
+
+
+  <ng-template #success>
+
+  </ng-template>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button form="resend" [disabled]="retrieveForm.invalid" class="w-100 btn-submit" color="primary">Send Recovery Link</button>
+</mat-dialog-actions>
