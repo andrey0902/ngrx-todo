@@ -38,6 +38,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   getUser(): void {
     this.sessionService.getUser$()
       .pipe(
+        filter(user => !!user),
         takeWhile(() => this.componentActive)
       )
       .subscribe((user: User) => {
@@ -121,7 +122,6 @@ export class TasksComponent implements OnInit, OnDestroy {
   openDeleteModal(cat: CategoryModel): void {
     if (confirm('Are you sour wont delete Category ?')) {
       // dispatch event delete TODO;
-      console.log(cat);
       this.tasksFacadeService.dispatchDeleteCategory({cat, user: this.user});
     }
   }

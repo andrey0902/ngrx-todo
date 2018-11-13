@@ -34,7 +34,9 @@ export class SignUpComponent implements OnInit {
     this.signUp = this.fb.group({
       'email': ['', [
         Validators.required,
-        Validators.email
+        Validators.pattern(/^([a-z0-9_-]+\.)*[a-z0-9_+0-9-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/),
+        Validators.minLength(6),
+        Validators.maxLength(50),
       ]
       ],
       'password': ['', [
@@ -43,7 +45,7 @@ export class SignUpComponent implements OnInit {
         Validators.maxLength(25),
         Validators.required
       ]
-      ],
+      ]
     });
   }
 

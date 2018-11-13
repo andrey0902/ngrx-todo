@@ -1,17 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { User } from '../../auth/shared/user';
 import { TaskService } from '../shared/task.service';
 import { Task } from '../shared/models/task.model';
 import { TaskStoreFacadeService } from '../shared/services/task-store-facade.service';
 import { CategoryModel } from '../shared/models/category.model';
 import { DragTask } from '../shared/models/actions.model';
+import { Subscription } from 'rxjs/index';
+import { DragulaService } from 'ng2-dragula';
+import { filter, takeWhile } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss']
 })
-export class TaskComponent implements OnInit {
+export class TaskComponent implements OnInit, OnDestroy {
   @Input() category: CategoryModel;
   @Input() tasks: Task[];
   @Input() lastCategory: boolean;
@@ -26,15 +29,35 @@ export class TaskComponent implements OnInit {
   @Output() deleteCat = new EventEmitter<CategoryModel>();
   @Output() dragTask = new EventEmitter<DragTask>();
   loadTasks$;
-  constructor(private taskFacadeService: TaskStoreFacadeService) { }
+  loadTasks;
+  componentActive = true;
+  subs = new Subscription();
+  constructor(private taskFacadeService: TaskStoreFacadeService,
+              private dragulaService: DragulaService) { }
 
   ngOnInit() {
     this.getTasksSingleCategory.emit(this.category.id);
     this.getTasks();
+
+    this.dragulaService.dropModel('DRAGULA_FACTS')
+      .pipe(
+        takeWhile(() => this.componentActive),
+        filter(({ name, el, target, source, sibling }) => target.getAttribute('data-cat') === this.category.id)
+      )
+        .subscribe(({ item }) => {
+           this.dragTask.emit({task: item, cat: this.category});
+        });
+  }
+  ngOnDestroy(): void {
+    this.componentActive = false;
   }
 
   getTasks() {
-    this.loadTasks$ = this.taskFacadeService.selectTaskSingleCategory(this.category.id);
+     this.taskFacadeService.selectTaskSingleCategory(this.category.id)
+       .pipe(
+         takeWhile(() => this.componentActive)
+       )
+       .subscribe(data => this.loadTasks = data);
   }
 
   onMoveToNextCat(task: Task) {
@@ -58,16 +81,6 @@ export class TaskComponent implements OnInit {
 
   deleteCategory() {
     this.deleteCat.emit(this.category);
-  }
-
-  onItemDrop(e: any) {
-    this.dragTask.emit({task: e.dragData, cat: this.category});
-  }
-  dragOver(e) {
-     console.log('over', e);
-    // console.log('over height', e.target.offsetHeight);
-    // console.log('over srcElement.offsetHeight', e.srcElement.offsetHeight);
-    // console.log('over height', e);
   }
 
 }

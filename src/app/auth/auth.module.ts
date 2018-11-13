@@ -17,6 +17,7 @@ import { CanActivateService } from './shared/can-activate.service';
 import { SendRestoreLinkComponent } from './send-restore-link/send-restore-link.component';
 import { VerifyComponent } from './verify/verify.component';
 import { VerifyRestorePasswordComponent } from './verify-restore-password/verify-restore-password.component';
+import { InputModule } from '../input/input.module';
 
 @NgModule({
   imports: [
@@ -30,17 +31,17 @@ import { VerifyRestorePasswordComponent } from './verify-restore-password/verify
       {
         path: 'sign-in',
         component: SignInComponent,
-       // canActivate: [CanActivateService]
+        canActivate: [CanActivateService]
       },// AuthService
       {
         path: 'verify',
         component: VerifyComponent,
-      //  canActivate: [CanActivateService]
+       canActivate: [CanActivateService]
       },
       {
         path: 'sign-up',
         component: SignUpComponent,
-       // canActivate: [CanActivateService]
+       canActivate: [CanActivateService]
       },
       {
         path: 'done',
@@ -61,6 +62,7 @@ import { VerifyRestorePasswordComponent } from './verify-restore-password/verify
     MatCardModule,
     MatCheckboxModule,
     MatIconModule,
+    InputModule,
   ],
   exports: [
     SignInComponent
@@ -72,7 +74,7 @@ import { VerifyRestorePasswordComponent } from './verify-restore-password/verify
     DoneComponent,
     SendRestoreLinkComponent,
     VerifyComponent,
-    VerifyRestorePasswordComponent
+    VerifyRestorePasswordComponent,
   ],
   entryComponents: [
     SendRestoreLinkComponent

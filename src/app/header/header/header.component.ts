@@ -71,11 +71,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         filter(v => v)
       )
       .subscribe(task => {
-      console.log('The dialog was closed', task);
-      // dispatch event save task
         const data: AddTaskModel = new AddTaskModel({task, user: this.user});
         this.taskFacadeService.dispatchSaveNewTask(data);
-      // this.taskService.addNewTask(task, this.lastId);
     });
   }
 

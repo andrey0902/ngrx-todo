@@ -15,6 +15,7 @@
   transform: translateY(-67%);
   height: 24px;
   width: 24px;
+  right: 3%;
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -34,6 +35,10 @@
   overflow-y: auto;
 }
 
-mat-form-field {
+.sub-task {
   width: 90%;
+}
+
+.add-subTask {
+  line-height: 29px;
 }

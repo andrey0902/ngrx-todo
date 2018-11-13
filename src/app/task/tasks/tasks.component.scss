@@ -3,6 +3,8 @@
   &-wrapper {
     display: flex;
     padding: 15px;
+    overflow: auto;
+    height: calc(99vh - 50px);
   }
 
 }

@@ -17,9 +17,12 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { EffectsModule } from '@ngrx/effects';
 import { TaskStoreFacadeService } from './shared/services/task-store-facade.service';
-import { ResolveTaskService } from './shared/services/resolve-task.service';
+
 import { NgDragDropModule } from 'ng-drag-drop';
 import { DragTaskDirective } from './shared/directives/drag-task.directive';
+import { DragulaModule } from 'ng2-dragula';
+import { InputModule } from '../input/input.module';
+import { CanActivateTask } from './shared/services/can-activate-task.service';
 
 
 @NgModule({
@@ -29,6 +32,7 @@ import { DragTaskDirective } from './shared/directives/drag-task.directive';
       {
         path: 'board',
         component: TasksComponent,
+        canActivate: [CanActivateTask]
         // resolve: {categories: ResolveTaskService}
       }
     ]),
@@ -47,6 +51,8 @@ import { DragTaskDirective } from './shared/directives/drag-task.directive';
     MatProgressSpinnerModule,
     AngularFireDatabaseModule,
     NgDragDropModule,
+    DragulaModule,
+    InputModule,
   ],
   declarations: [
     TasksComponent,
@@ -64,6 +70,9 @@ import { DragTaskDirective } from './shared/directives/drag-task.directive';
   ],
   entryComponents: [
     AddTaskComponent
+  ],
+  providers: [
+    CanActivateTask,
   ]
 })
 export class TaskModule { }

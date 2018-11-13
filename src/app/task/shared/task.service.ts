@@ -8,16 +8,28 @@ import { CategoryModel } from './models/category.model';
 import { Task } from './models/task.model';
 import { User } from '../../auth/shared/user';
 import { DragTask, IFullUpdateTask } from './models/actions.model';
-import { TaskStoreFacadeService } from './services/task-store-facade.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
   public dataUser;
-  constructor(private db: AngularFireDatabase,
-              private fasad: TaskStoreFacadeService) {
+  constructor(private db: AngularFireDatabase) {
     this.dataUser = this.db.object('/users');
+    this.getSomeData(2);
+  }
+
+  getSomeData(cat) {
+      this.db.list(`/choose`, ref => ref.orderByChild('cat').equalTo(2)).snapshotChanges()
+    .
+      subscribe(d => {
+       const res = d.map(i => {
+          return i.payload.val();
+        })
+      console.log('res', res);
+
+
+    });
   }
 
   /**
@@ -160,12 +172,5 @@ export class TaskService {
       task,
       prevCategory
     };
-  }
-
-  dragTaskStart(height: number) {
-    this.fasad.dispatchDragTaskStart(height);
-  }
-  dragTaskEnd(height: number) {
-    this.fasad.dispatchDragTaskEnd(height);
   }
 }

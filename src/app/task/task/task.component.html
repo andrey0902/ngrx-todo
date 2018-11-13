@@ -21,10 +21,8 @@
 
   <!--</ng-container>-->
 <!--</div>-->
+
 <div class="category-col"
-     droppable
-     (onDrop)="onItemDrop($event)"
-     (onDragOver)="dragOver($event)"
 
 
 >
@@ -36,10 +34,10 @@
       </i>
     </button>
   </div>
-  <div class="category-wrapper">
-    <ng-container *ngIf="loadTasks$ | async as tasks; else loader">
-      <ng-container *ngIf="tasks.length">
-        <app-task-card *ngFor="let task of tasks"
+  <div class="category-wrapper" dragula="DRAGULA_FACTS" [(dragulaModel)]="loadTasks" [attr.data-cat]="category.id">
+    <ng-container *ngIf="loadTasks; else loader">
+      <ng-container *ngIf="loadTasks.length">
+        <app-task-card *ngFor="let task of loadTasks"
                        [task]="task"
                        [dataTask]="task"
                        [lastCategory]="lastCategory"
@@ -49,6 +47,7 @@
                        (deleteTask)="onDeleteTask($event)"
                        (updateTask)="onUpdateTask($event)"
                        (fullUpdateTask)="onFullUpdateTask($event)"
+
         ></app-task-card>
       </ng-container>
     </ng-container>

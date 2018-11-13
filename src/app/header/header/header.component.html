@@ -6,7 +6,7 @@
           <img class="logo-img" src="./assets/TODO_Logo.png" alt="logo">
         </a>
       </div>
-      <div class="nav-wrapper">
+      <div class="nav-wrapper" *ngIf="user">
         <div class="action">
           <button mat-raised-button (click)="openModal()">Add ToDo</button>
         </div>

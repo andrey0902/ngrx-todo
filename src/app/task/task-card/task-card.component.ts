@@ -52,14 +52,4 @@ export class TaskCardComponent implements OnInit, OnDestroy {
   onUpdate() {
     this.fullUpdateTask.emit(this.task);
   }
-
-  start(e) {
-    // console.log('over', e);
-    // console.log('over', e.target.offsetHeight);
-    this.taskService.dragTaskStart(e.target.offsetHeight);
-  }
-
-  end() {
-    this.taskService.dragTaskEnd(null);
-  }
 }

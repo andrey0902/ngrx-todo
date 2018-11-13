@@ -21,6 +21,8 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { HttpClientModule } from '@angular/common/http';
 import { TaskEffectService } from './task/state/task-effect.service';
 import { NgDragDropModule } from 'ng-drag-drop';
+import { DragulaModule } from 'ng2-dragula';
+import { ErrorInputComponent } from './error-input/error-input.component';
 
 function initApp(store) {
   return () => {
@@ -42,7 +44,7 @@ function initApp(store) {
     RouterModule.forRoot([
       // {
       //   path: '',
-      //   redirectTo: '',
+      //   redirectTo: '/sign-in',
       //   pathMatch: 'full'
       // },
       {
@@ -66,7 +68,8 @@ function initApp(store) {
     HeaderModule,
     TaskModule,
     HttpClientModule,
-    NgDragDropModule.forRoot()
+    NgDragDropModule.forRoot(),
+    DragulaModule.forRoot()
   ],
   providers: [
     Store,

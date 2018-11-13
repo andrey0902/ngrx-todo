@@ -1,0 +1,10 @@
+:host::ng-deep .isNegative-error + .default-message {
+  display: none;
+}
+
+:host::ng-deep p, p {
+  padding: .1rem;
+  margin: 0;
+  font-size: 10px;
+  color: red;
+}

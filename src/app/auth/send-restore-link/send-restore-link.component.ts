@@ -3,7 +3,6 @@ import { Observable, of, Subject } from 'rxjs/index';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AuthService } from '../shared/auth.service';
-import { catchError, filter, takeUntil } from 'rxjs/internal/operators';
 import { AuthStoreFacadeService } from '../shared/services/auth-store-facade.service';
 
 @Component({
@@ -28,13 +27,6 @@ export class SendRestoreLinkComponent implements OnInit, OnDestroy {
     this.createForm();
     this.getServerError();
     this.getSendSuccessLink();
-    // this.retrieveForm.valueChanges
-    //   .pipe(takeUntil(this.onDestroy$))
-    //   .subscribe(value => {
-    //     if (this.serverError) {
-    //       this.serverError = false;
-    //     }
-    //   });
   }
 
   getSendSuccessLink() {
@@ -59,13 +51,13 @@ export class SendRestoreLinkComponent implements OnInit, OnDestroy {
       email: [null, [
         Validators.required,
         Validators.minLength(5),
+        Validators.maxLength(50),
         this.auth.checkEmail
       ]]
     });
   }
 
   public getErrorMessage(control: FormControl) {
-   // return this.handlerError.getError(control);
   }
 
   public onSubmit( form: FormGroup) {
@@ -73,15 +65,6 @@ export class SendRestoreLinkComponent implements OnInit, OnDestroy {
     if (form.valid) {
       console.log(form);
       this.authFacadeService.sendRestoreLink(form.value);
-      // this.auth.resetPassword(form.value)
-      //   .pipe(catchError(error => {
-      //       this.serverError = error.error;
-      //       return of('error');
-      //     }),
-      //     filter(value =>  value !== 'error'))
-      //   .subscribe(response => {
-      //     this.successSend = true;
-      //   });
     }
   }
 

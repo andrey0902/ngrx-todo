@@ -124,12 +124,10 @@ export class TaskEffectService {
       ofType(TaskActionTypes.GetDefaultCategory),
       switchMap(
         () => {
-          console.log('get data')
           return this.taskService.getDefaultCategory()
             .pipe(
               map(result => {
                 const data = result.map(c => ( c.payload.val()))
-                console.log('category', data);
                 return new GetDefaultCategorySuccess({defaultCategory: data});
               }),
               catchError((error => of(new GetDefaultCategoryError({error: error.message}))))

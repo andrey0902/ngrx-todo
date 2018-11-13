@@ -11,9 +11,14 @@
   </button>
 
   <div class="category-field" *ngIf="isEdit">
-    <mat-form-field>
-      <input matInput placeholder="Category name" [formControl]="categoryControl">
-    </mat-form-field>
+      <app-input>
+        <mat-form-field>
+          <input matInput placeholder="Category name" [formControl]="categoryControl">
+        </mat-form-field>
+        <app-input-error>
+        </app-input-error>
+      </app-input>
+
     <div class="action">
       <div class="sc-dEfkYy fsdcIQ">
         <div class="sc-cqPOvA ggZopg first">

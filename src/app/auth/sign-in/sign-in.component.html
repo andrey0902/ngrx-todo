@@ -71,18 +71,30 @@
             <!--<odds-error [form]="signIn" [errors]="serverError" [errorName]="'none_field'"></odds-error>-->
           </div>
           <div class="form-name">
-            <mat-form-field>
-              <input matInput placeholder="Email address" formControlName="email" type="email">
-              <!--<mat-error *ngIf="signIn.get('email').invalid">{{getErrorMessage(signIn.get('email'))}}</mat-error>-->
-            </mat-form-field>
+            <app-input>
+              <mat-form-field>
+                <input matInput placeholder="Email address" formControlName="email" type="email">
+              </mat-form-field>
+              <app-input-error>
+                <p class="pattern-error">Pattern isn't correctly</p>
+              </app-input-error>
+            </app-input>
           </div>
           <div class="form-password">
-            <mat-form-field>
-              <input matInput placeholder="Password" formControlName="password" [type]="hide ? 'password' : 'text'">
-              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
-              <!--<mat-error *ngIf="signIn.get('password').invalid">{{getErrorMessage(signIn.get('password'))}}</mat-error>-->
-            </mat-form-field>
+            <app-input>
+              <mat-form-field>
+                <input matInput placeholder="Password" formControlName="password" [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                <!--<mat-error *ngIf="signIn.get('password').invalid">{{getErrorMessage(signIn.get('password'))}}</mat-error>-->
+                </mat-form-field>
+                <app-input-error>
+                  <p class="pattern-error">Pattern isn't correctly</p>
+                  <!--<p class="max-error">Max length is OK!!!!)))))</p>-->
+                  <!--<p class="required-error">This text is rewrite default error is required</p>-->
+                </app-input-error>
+            </app-input>
           </div>
+
           <div class="form-forgot">
             <button type="button"
                     *ngIf="!serverError"
@@ -106,3 +118,4 @@
     </div>
   </div>
 </div>
+

@@ -15,12 +15,17 @@
       </mat-form-field>
     </div>
     <div class="todo-title">
-      <mat-form-field>
-        <input matInput placeholder="Title of the ToDo" [formControlName]="'title'">
-      </mat-form-field>
+      <app-input>
+        <mat-form-field>
+          <input matInput placeholder="Title of the ToDo" [formControlName]="'title'">
+        </mat-form-field>
+        <app-input-error>
+        </app-input-error>
+      </app-input>
+
     </div>
     <div class="todo-action">
-      <button mat-stroked-button color="primary" (click)="addNewTask()">
+      <button class="add-subTask" mat-stroked-button color="primary" (click)="addNewTask()">
         <i class="material-icons">
           add_circle_outline
         </i>
@@ -29,9 +34,13 @@
     <div class="todo-task-wrapper">
       <div class="todo-task" *ngFor="let subTasks of getTasks().controls; let i=index;" [formGroup]="subTasks">
         <div class="todo-wrapper-input">
-          <mat-form-field>
-            <input matInput placeholder="Task" [formControl]="subTasks.controls['name']">
-          </mat-form-field>
+          <app-input class="sub-task">
+            <mat-form-field>
+              <input matInput placeholder="Task" [formControl]="subTasks.controls['name']">
+            </mat-form-field>
+            <app-input-error>
+            </app-input-error>
+          </app-input>
           <button type="button" class="todo-action-delete" (click)="deleteControl(i)"><i class="material-icons">
             clear
           </i></button>

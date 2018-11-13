@@ -24,12 +24,14 @@
       </div>
 
       <div class="form-email">
-        <mat-form-field>
-          <input matInput placeholder="Email address" formControlName="email" type="email">
-          <!--<mat-error *ngIf="retrieveForm.get('email').invalid">{{getErrorMessage(retrieveForm.get('email'))}}</mat-error>-->
-        </mat-form-field>
+        <app-input>
+          <mat-form-field>
+            <input matInput placeholder="Email address" formControlName="email" type="email">
+          </mat-form-field>
+          <app-input-error>
+          </app-input-error>
+        </app-input>
       </div>
-
     </form>
   </ng-template>
 
