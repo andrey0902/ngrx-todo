@@ -23,6 +23,7 @@ import { TaskEffectService } from './task/state/task-effect.service';
 import { NgDragDropModule } from 'ng-drag-drop';
 import { DragulaModule } from 'ng2-dragula';
 import { ErrorInputComponent } from './error-input/error-input.component';
+import { InputModule } from './input/input.module';
 
 function initApp(store) {
   return () => {
@@ -69,7 +70,11 @@ function initApp(store) {
     TaskModule,
     HttpClientModule,
     NgDragDropModule.forRoot(),
-    DragulaModule.forRoot()
+    DragulaModule.forRoot(),
+    InputModule.forRoot( {
+      'root': () => 'root test'
+    }
+    )
   ],
   providers: [
     Store,

@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
-import { NgControl } from '@angular/forms';
+import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { AbstractControl, NgControl } from '@angular/forms';
+import { ErrorMessageModel } from '../errorMessage.model';
+
+export const ERROR_CONFIG = new InjectionToken<string>('ErrorConfig');
 
 @Injectable()
 export class HandlerErrorService {
-  private static readonly errorMessages = {
+  public readonly errorMessages: ErrorMessageModel = {
     'isNegative': () => 'this field is not have negative value',
     'patternUrl': () => 'Url pattern is invalid',
     'strEmpty': () => 'This field is not have only spaces',
@@ -24,22 +27,48 @@ export class HandlerErrorService {
     'timeDecimalError': (params) => 'Incorrect time format',
     'email': (params) => `Email ${params}`
   };
-  constructor() {
+  private newErrorsMessagesDef: {[key: string]: ErrorMessageModel};
+
+  constructor(@Optional() @Inject(ERROR_CONFIG) private config: ErrorMessageModel ) {
+    if (config) {
+      this.newErrorsMessagesDef = {
+        def: this.updateErrors(config)
+      };
+    }
   }
 
   public getError(control: NgControl) {
    return Object.keys(control.errors);
   }
+ /**
+  * config used for get custom error messages
+  * we get error from config or default settings
+  * */
 
-  public getMessage(type: string, params: any) {
-    return HandlerErrorService.errorMessages[type](params);
+  public newGetMessage(name: string, params: any, id: string) {
+    return  this.newGetErrorsList(id)[name](params);
   }
 
-  private addErrors(fieldName: string, fields: string[] ): string[] {
-    fields.push(fieldName);
+  public getAllErrors(control: AbstractControl, listError: string[], id: string) {
+    const res: string[] = [];
 
-    return fields;
+    listError.forEach((errName) => {
+      res.push(this.newGetMessage(errName, control.errors[errName], id));
+    });
+    return res;
+  }
 
+  updateErrors(newErrors: ErrorMessageModel) {
+    return Object.assign({}, this.errorMessages, newErrors);
+  }
 
+  newGetErrorsList(id) {
+    return this.newErrorsMessagesDef[id]
+      || this.newErrorsMessagesDef.def
+      || this.errorMessages;
+  }
+
+  setRefMessage(id: string, messages: ErrorMessageModel) {
+    this.newErrorsMessagesDef[id] = Object.setPrototypeOf(messages, this.newErrorsMessagesDef.def);
   }
 }

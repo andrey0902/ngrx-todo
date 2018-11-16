@@ -2,8 +2,9 @@ import { Component, Host, Inject, Input, OnDestroy, OnInit } from '@angular/core
 import { InputComponent } from '../input/input.component';
 import { NgControl, ValidationErrors } from '@angular/forms';
 import { Observable, Subject } from 'rxjs/index';
-import { takeUntil } from 'rxjs/internal/operators';
+import { filter, takeUntil } from 'rxjs/internal/operators';
 import { HandlerErrorService } from '../shared/services/handler-error.service';
+import { ErrorMessageModel } from '../shared/errorMessage.model';
 
 @Component({
   selector: 'app-input-error',
@@ -11,17 +12,25 @@ import { HandlerErrorService } from '../shared/services/handler-error.service';
   styleUrls: ['./input-error.component.scss']
 })
 export class InputErrorComponent implements OnInit, OnDestroy {
+  id: string = '_' + Math.random().toString(36).substr(2, 9);
   public onDestroy$ = new Subject();
-  public messages: string[];
-  // new strategy
-  errorMessage: string;
-  errorsType: string; // | string[]
-  // show all message or one
+
+  errorMessage: string| string[];
+
   @Input() showAllMessage = false;
-  constructor(@Host() private parent: InputComponent, public handlerErrorsService: HandlerErrorService) { }
+  /**
+   * used for update new local message for current component
+   * */
+  @Input() configMessage: ErrorMessageModel;
+
+  constructor(@Host() private parent: InputComponent, public handlerErrors: HandlerErrorService) { }
 
   ngOnInit(): void {
     this.init();
+  }
+
+  createRefUniqueMessage() {
+    this.handlerErrors.setRefMessage(this.id, this.configMessage);
   }
 
   ngOnDestroy(): void {
@@ -30,17 +39,29 @@ export class InputErrorComponent implements OnInit, OnDestroy {
 
   init() {
     this.changeControl();
+    if (this.configMessage) {
+      this.createRefUniqueMessage();
+    }
   }
 
   isState(): Observable<any> {
-    if ( this.parent && this.parent.controlValidation) {
-      return this.parent.controlValidation.stateChanges;
+    if ( this.parent && (this.parent.control || this.parent.controlSelect)) {
+      return (this.parent.control || this.parent.controlSelect).stateChanges;
     }
       return null;
   }
+/**
+ * errorStateMatcher used for defined first state of control
+ * show error or not
+ * */
+  errorStateMatcher(): boolean {
+    const control = this.getControl();
+    // && control.dirty
+    return control.touched ;
+  }
 
   getControl(): NgControl | null {
-    return this.parent.controlValidation.ngControl;
+    return (this.parent.control || this.parent.controlSelect).ngControl;
   }
 
   changeControl(): void {
@@ -51,11 +72,14 @@ export class InputErrorComponent implements OnInit, OnDestroy {
     }
   }
 
-  handlerChang(state: Observable<any>): void {
+  handlerChang(state: Observable<any>) {
     state
-      .pipe(takeUntil(this.onDestroy$))
+      .pipe(
+        filter(() => this.errorStateMatcher()),
+        takeUntil(this.onDestroy$)
+      )
       .subscribe(value => {
-        this.handlerError();
+        this.errorMessage = this.handlerError();
       });
   }
 
@@ -63,38 +87,43 @@ export class InputErrorComponent implements OnInit, OnDestroy {
     return control ? control.errors : null;
   }
 
-  handlerError(): void {
+  handlerError(): string | string[] {
     const control = this.getControl();
 
     const errors = this.hasErrors(control);
 
     if (errors) {
-       const messageName = this.handlerErrorsService.getError(control);
-       // old strategy i want rewrite it
-       // this.messages = this.selectMessage(message);
+       const listErrorsName: string[] = this.handlerErrors.getError(control);
 
-      // this var used for ngSwitch show different error
-       this.errorsType = this.selectMessage(messageName);
-
-       // this var use for get error message for the current control
-       this.errorMessage = this.handlerErrorsService.getMessage(this.errorsType, control.errors[this.errorsType]);
-
-      return;
+       return this.getErrorMessage(control, listErrorsName);
     }
-    // this.messages = null;
-    this.errorsType = null;
+    return null;
+  }
+  /**
+   * return value errors
+   * */
+  getErrorMessage(control, listError: string[]): string | string[] {
+    if (this.showAllMessage) {
+      return this.getAllMessage(control, listError);
+    }
+    return this.getSingMessage(control, listError);
   }
 
-  selectMessage(messages: any[]) {
-    if (this.showAllMessage) {
-      return messages;
-    }
+  getSingMessage(control, listError): string {
+    const errorName: string = this.selectMessage(listError);
 
+    return this.handlerErrors.newGetMessage(
+      errorName,
+      control.errors[errorName],
+      this.id
+    );
+  }
+
+  getAllMessage(control, listError): string[] {
+    return this.handlerErrors.getAllErrors(control, listError, this.id);
+  }
+
+  selectMessage(messages: any[]): string {
     return messages[0];
   }
-
-  getStateFocused() {
-    return (this.parent && this.parent.controlValidation &&  !this.parent.controlValidation.ngControl.touched);
-  }
-
 }

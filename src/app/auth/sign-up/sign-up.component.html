@@ -44,14 +44,11 @@
                 <input matInput autocomplete="off" placeholder="Password" formControlName="password" [type]="hide ? 'password' : 'text'">
                 <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
               </mat-form-field>
-              <app-input-error>
+              <app-input-error [configMessage]="errorMessage" [showAllMessage]="true">
                 <p class="pattern-error">Pattern isn't correctly</p>
               </app-input-error>
             </app-input>
-
-
           </div>
-
           <button mat-raised-button [disabled]="signUp.invalid" class="w-100 btn-submit" color="primary">Sign Up</button>
         </form>
       </div>
@@ -59,7 +56,7 @@
     <div class="row justify-content-center">
       <div class="col-12 col-lg-4 col-sm-7">
         <p class="no-account">
-          Alredy have an Task account? <a class="link" [routerLink]="['/sign-in']">Sign In here</a>
+          Already have an Task account? <a class="link" [routerLink]="['/sign-in']">Sign In here</a>
         </p>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { AuthService } from '../shared/auth.service';
 import { Observable } from 'rxjs/index';
 import { AuthStoreFacadeService } from '../shared/services/auth-store-facade.service';
+import { HelperValidators } from '../../input/shared/helper-validators';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,6 +15,9 @@ export class SignUpComponent implements OnInit {
   hide = true;
   serverError: null;
   error$: Observable<string>;
+  errorMessage = {
+    pattern: () =>  'Wrong pattern'
+  };
   constructor(public fb: FormBuilder,
               public auth: AuthService,
               private authFacadeService: AuthStoreFacadeService) { }
@@ -23,8 +27,6 @@ export class SignUpComponent implements OnInit {
     this.getError();
 
   }
-
-
 
   getError() {
     this.error$ = this.authFacadeService.getSignUpErrors$();
@@ -36,7 +38,7 @@ export class SignUpComponent implements OnInit {
         Validators.required,
         Validators.pattern(/^([a-z0-9_-]+\.)*[a-z0-9_+0-9-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/),
         Validators.minLength(6),
-        Validators.maxLength(50),
+        Validators.maxLength(50)
       ]
       ],
       'password': ['', [

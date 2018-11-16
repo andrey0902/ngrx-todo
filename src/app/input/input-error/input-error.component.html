@@ -1,60 +1,14 @@
 
-<div [ngSwitch]="errorsType"
-     [hidden]="getStateFocused()"
->
-  <app-min-length-error
-    *ngSwitchCase="'minlength'"
-    [message]="errorMessage"
-  >
-    <ng-content select=".min-error"></ng-content>
-  </app-min-length-error>
+<ng-container *ngIf="errorMessage; else allError">
+  <div class="errors-type">
+    {{errorMessage}}
+  </div>
+</ng-container>
 
-
-  <app-max-length-error
-    *ngSwitchCase="'maxlength'"
-    [message]="errorMessage"
-  >
-    <ng-content select=".max-error"></ng-content>
-  </app-max-length-error>
-
-  <app-required-error
-  *ngSwitchCase="'required'"
-  [message]="errorMessage"
-  >
-    <ng-content select=".required-error"></ng-content>
-  </app-required-error>
-
-  <app-str-empty
-    *ngSwitchCase="'strEmpty'"
-    [message]="errorMessage"
-  >
-    <ng-content select=".empty-error"></ng-content>
-  </app-str-empty>
-
-  <app-url-pattern-error
-    *ngSwitchCase="'patternUrl'"
-    [message]="errorMessage">
-    <ng-content select=".patternUrl-error"></ng-content>
-  </app-url-pattern-error>
-  <app-negative-error
-    *ngSwitchCase="'isNegative'"
-    [message]="errorMessage">
-    <ng-content select=".isNegative-error"></ng-content>
-  </app-negative-error>
-  <app-password-match-error
-    *ngSwitchCase="'passwordMatch'"
-    [message]="errorMessage">
-    <ng-content select=".password-match-error"></ng-content>
-  </app-password-match-error>
-  <app-pattern-email-error
-    *ngSwitchCase="  'patternEmail'"
-    [message]="errorMessage">
-    <ng-content select=".pattern-email-error"></ng-content>
-  </app-pattern-email-error>
-  <app-default-pattern
-    *ngSwitchCase="'pattern'"
-    [message]="errorMessage">
-    <ng-content select=".pattern-error"></ng-content>
-  </app-default-pattern>
-</div>
-
+<ng-template #allError>
+  <div class="errors-type">
+    <p class="error-message" *ngFor="let error of errorMessage">
+      {{error}}
+    </p>
+  </div>
+</ng-template>

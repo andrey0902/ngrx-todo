@@ -1,5 +1,5 @@
 import { Component, ContentChild, OnInit } from '@angular/core';
-import { MatInput } from '@angular/material';
+import { MatInput, MatSelect } from '@angular/material';
 
 
 @Component({
@@ -8,7 +8,8 @@ import { MatInput } from '@angular/material';
   styleUrls: ['./input.component.scss']
 })
 export class InputComponent implements OnInit {
-  @ContentChild(MatInput) public controlValidation: MatInput;
+  @ContentChild(MatInput) public control: MatInput;
+  @ContentChild(MatSelect) public controlSelect: MatSelect;
   constructor() { }
 
   ngOnInit() {

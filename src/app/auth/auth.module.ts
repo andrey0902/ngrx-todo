@@ -5,7 +5,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import {
-  MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule,
+  MatSelectModule
 } from '@angular/material';
 import { StoreModule } from '@ngrx/store';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -41,7 +42,7 @@ import { InputModule } from '../input/input.module';
       {
         path: 'sign-up',
         component: SignUpComponent,
-       canActivate: [CanActivateService]
+        canActivate: [CanActivateService]
       },
       {
         path: 'done',
@@ -63,6 +64,7 @@ import { InputModule } from '../input/input.module';
     MatCheckboxModule,
     MatIconModule,
     InputModule,
+    MatSelectModule,
   ],
   exports: [
     SignInComponent
